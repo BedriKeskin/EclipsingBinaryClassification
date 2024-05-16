@@ -5,16 +5,12 @@ from keras.src.utils import to_categorical
 from sklearn.model_selection import train_test_split
 import data
 import model
-# from ultralytics import YOLO
 
 now1 = datetime.datetime.now()
 print("Time start: ", now1)
 
-# Images, Labels = data.ImagesLabelsInFolder("/Users/tiga/My Drive/Doktora/Villanova_Kepler/PNG-")
-# Images1, Labels1 = data.ImagesLabelsInFolder("/Users/tiga/My Drive/Doktora/Villanova_TESS/PNG-")
-
-Images, Labels = data.ImagesLabelsInFolder("/truba/home/bkeskin/Villanova_Kepler/PNG.")
-Images1, Labels1 = data.ImagesLabelsInFolder("/truba/home/bkeskin/Villanova_TESS/PNG.")
+Images, Labels = data.ImagesLabelsInFolder("Kepler/PNG.")
+Images1, Labels1 = data.ImagesLabelsInFolder("Tess/PNG.")
 
 Images += Images1
 Labels += Labels1
@@ -31,7 +27,7 @@ x_train, x_test, y_train, y_test = train_test_split(images, labels, test_size=0.
 x_test, x_val, y_test, y_val = train_test_split(x_test, y_test, test_size=0.75, random_state=77)
 
 checkpoint = ModelCheckpoint(
-    filepath='MyVgg19_'+datetime.datetime.now().strftime("%Y%m%d-%H%M%S")+'.keras',
+    filepath='Sequential_'+datetime.datetime.now().strftime("%Y%m%d-%H%M%S")+'.keras',
     monitor='val_accuracy',
     verbose=1,
     save_best_only=True
@@ -39,7 +35,7 @@ checkpoint = ModelCheckpoint(
 
 earlystop = EarlyStopping(monitor='val_accuracy', patience=5, verbose=1)
 
-mymodel = model.vgg19()
+mymodel = model.sequential()
 history = mymodel.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=10, verbose=1,
                       callbacks=[checkpoint, earlystop])  # , batch_size=256 ,
 
