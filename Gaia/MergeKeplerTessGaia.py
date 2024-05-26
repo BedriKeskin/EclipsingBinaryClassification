@@ -1,8 +1,7 @@
 # Villanova'nın Kepler ve Tess eclipsing binary star listesini alır, Morph'tan morfolojik Class'ını bulur,
 # tabloları alt alta birleştirir, Simbad'ı kullanarak KIC'tan TIC ve Gaia DR3 nosunu veya TIC'tan KIC ve Gaia DR3 nosunu bulur, diske kaydeder.
 import pandas as pd
-import querySimbad
-import datetime
+
 '''
 now1 = datetime.datetime.now()
 print("Start time: ", now1)
