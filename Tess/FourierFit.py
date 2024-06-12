@@ -40,7 +40,6 @@ w, = parameters('w')
 model_dict = {y: fourier_series(x, f=w, n=order-1)}
 print(model_dict)
 
-# Make step function data
 LCdatas = glob.glob("./LCdata/*.csv")
 
 for index, LCdata in enumerate(LCdatas):
