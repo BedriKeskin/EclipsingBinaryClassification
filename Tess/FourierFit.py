@@ -35,11 +35,7 @@ def fourier_series(x, f, n=0):
 
 
 x, y = variables('x, y')
-print(x)
-print(y)
-
 w, = parameters('w')
-print(w)
 
 model_dict = {y: fourier_series(x, f=w, n=order)}
 print(model_dict)
