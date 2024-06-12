@@ -10,7 +10,7 @@ from astropy.timeseries import TimeSeries
 from astropy.timeseries import aggregate_downsample
 from symfit import parameters, variables, sin, cos, Fit
 
-order = 20
+order = 11
 folderName = "PNG" + str(order)
 
 if not os.path.exists(folderName):
@@ -37,7 +37,7 @@ def fourier_series(x, f, n=0):
 x, y = variables('x, y')
 w, = parameters('w')
 
-model_dict = {y: fourier_series(x, f=w, n=order)}
+model_dict = {y: fourier_series(x, f=w, n=order-1)}
 print(model_dict)
 
 # Make step function data
