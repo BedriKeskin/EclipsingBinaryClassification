@@ -10,8 +10,10 @@ from astropy.timeseries import TimeSeries
 from astropy.timeseries import aggregate_downsample
 from symfit import parameters, variables, sin, cos, Fit
 
-order = 11
-folderName = "PNG" + str(order)
+df = pd.DataFrame(columns=['ID', 'morph', 'T0', 'P', 'a0', 'a1', 'a10', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'w', 'label'])
+
+order = 10
+folderName = "PNG" + str(order) + "_withoutSine"
 
 if not os.path.exists(folderName):
     os.makedirs(folderName)
@@ -28,16 +30,17 @@ def fourier_series(x, f, n=0):
     # Make the parameter objects for all the terms
     a0, *cos_a = parameters(','.join(['a{}'.format(i) for i in range(0, n + 1)]))
     sin_b = parameters(','.join(['b{}'.format(i) for i in range(1, n + 1)]))
-    # Construct the series
-    series = a0 + sum(ai * cos(i * f * x) + bi * sin(i * f * x)
-                      for i, (ai, bi) in enumerate(zip(cos_a, sin_b), start=1))
+    # withSine
+    # series = a0 + sum(ai * cos(i * f * x) + bi * sin(i * f * x) for i, (ai, bi) in enumerate(zip(cos_a, sin_b), start=1))
+    # withoutSine
+    series = a0 + sum(ai * cos(i * f * x) for i, (ai) in enumerate(cos_a, start=1))
     return series
 
 
 x, y = variables('x, y')
 w, = parameters('w')
 
-model_dict = {y: fourier_series(x, f=w, n=order-1)}
+model_dict = {y: fourier_series(x, f=w, n=order)}
 print(model_dict)
 
 LCdatas = glob.glob("./LCdata/*.csv")
@@ -71,6 +74,28 @@ for index, LCdata in enumerate(LCdatas):
         fit_result = fit.execute()
         print(fit_result)
 
+        df1 = pd.DataFrame(fit_result.params, index=[0])
+        df1.insert(0, 'P', P)
+        df1.insert(0, 'T0', float(os.path.basename(LCdata).split("_")[4]))
+        morph = float(os.path.basename(LCdata).split("_")[2])
+        df1.insert(0, 'morph', morph)
+        df1.insert(0, 'ID', os.path.basename(LCdata).split("_")[0])
+
+        label = ""
+
+        if morph <= 0.4:
+            label = "Detached"
+        elif morph <= 0.7:
+            label = "SemiDetached"
+        elif morph <= 0.8:
+            label = "OverContact"
+        else:
+            label = "Ellipsoidal"
+
+        df1['label'] = label
+
+        df = pd.concat([df, df1], ignore_index=True)
+
         # Plot the result
         plt.plot(xdata, ydata, color='black', ls=':')
         plt.plot(xdata, fit.model(x=xdata, **fit_result.params).y, color='red', ls='-')
@@ -79,3 +104,5 @@ for index, LCdata in enumerate(LCdatas):
 
     except Exception as e:
         print(f"{e} Error")
+
+df.to_csv('inputFileForML.csv')
