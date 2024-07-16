@@ -18,6 +18,10 @@ folderName = "PNG" + str(order) + "_withoutSine"
 if not os.path.exists(folderName):
     os.makedirs(folderName)
 
+os.makedirs(os.path.join(folderName, 'Detached'))
+os.makedirs(os.path.join(folderName, 'SemiDetached'))
+os.makedirs(os.path.join(folderName, 'OverContact'))
+os.makedirs(os.path.join(folderName, 'Ellipsoidal'))
 
 def fourier_series(x, f, n=0):
     """
@@ -52,9 +56,13 @@ for index, LCdata in enumerate(LCdatas):
         LC = pd.read_csv(LCdata, delim_whitespace=False, index_col=False)
         LC = LC[:].values
         LC = pd.DataFrame(LC, columns=['index', 'BJD', 'ColA', 'NormalizedFlux', 'ColC'])
+        LC = LC.drop('index', axis=1)
+        LC = LC.drop('ColA', axis=1)
+        LC = LC.drop('ColC', axis=1)
 
         LC['BJD'] = LC['BJD'] + 2450000
         LC.index = pd.to_datetime(LC['BJD'], origin='julian', unit='D')
+        LC = LC.drop('BJD', axis=1)
         timeSeries = TimeSeries.from_pandas(LC)
 
         T0 = float(os.path.basename(LCdata).split("_")[4])
@@ -67,12 +75,13 @@ for index, LCdata in enumerate(LCdatas):
         ts_binned = aggregate_downsample(ts_folded, time_bin_size=10 * u.min, aggregate_func=np.nanmedian)
 
         xdata = ts_binned.time_bin_start.jd
+        xdata = xdata/(-xdata[0]*2)
         ydata = ts_binned['NormalizedFlux']
 
         # Define a Fit object for this model and data
         fit = Fit(model_dict, x=xdata, y=ydata)
         fit_result = fit.execute()
-        print(fit_result)
+        #print(fit_result)
 
         df1 = pd.DataFrame(fit_result.params, index=[0])
         df1.insert(0, 'P', P)
@@ -99,10 +108,10 @@ for index, LCdata in enumerate(LCdatas):
         # Plot the result
         plt.plot(xdata, ydata, color='black', ls=':')
         plt.plot(xdata, fit.model(x=xdata, **fit_result.params).y, color='red', ls='-')
-        plt.savefig(folderName + '/' + os.path.basename(LCdata)[:-4] + '.png')
+        plt.savefig(folderName + '/' + label + '/' + os.path.basename(LCdata)[:-4] + '.png')
         plt.close()
 
     except Exception as e:
         print(f"{e} Error")
 
-df.to_csv('inputFileForML.csv')
+df.to_csv('FourierCoeffs_TESS.csv', index=False)
