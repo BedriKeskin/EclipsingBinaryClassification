@@ -1,6 +1,5 @@
 import glob
 import os
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -9,27 +8,20 @@ from astropy.time import Time
 from astropy.timeseries import TimeSeries
 from astropy.timeseries import aggregate_downsample
 from symfit import parameters, variables, sin, cos, Fit
+from astropy.io.votable import parse
+from symfit.core.minimizers import NelderMead, BFGS
+from sklearn import preprocessing
+
+np.set_printoptions(threshold=np.inf)
 
 df = pd.DataFrame(
-    columns=['ID', 'morph', 'T0', 'P', 'a0', 'a1', 'a10', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'w', 'label'])
+    columns=['ID', 'T0', 'P', 'a0', 'a1', 'a10', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'w'])
 
 order = 10
 folderName = "PNG" + str(order) + "_withoutSine"
 
 if not os.path.exists(folderName):
     os.makedirs(folderName)
-
-if not os.path.exists(os.path.join(folderName, 'Detached')):
-    os.makedirs(os.path.join(folderName, 'Detached'))
-
-if not os.path.exists(os.path.join(folderName, 'SemiDetached')):
-    os.makedirs(os.path.join(folderName, 'SemiDetached'))
-
-if not os.path.exists(os.path.join(folderName, 'OverContact')):
-    os.makedirs(os.path.join(folderName, 'OverContact'))
-
-if not os.path.exists(os.path.join(folderName, 'Ellipsoidal')):
-    os.makedirs(os.path.join(folderName, 'Ellipsoidal'))
 
 
 def fourier_series(x, f, n=0):
@@ -56,77 +48,75 @@ w, = parameters('w')
 model_dict = {y: fourier_series(x, f=w, n=order)}
 print(model_dict)
 
-LCdatas = glob.glob("./LCdata/*.csv")
+
+def votable_to_pandas(votable_file):
+    votable = parse(votable_file)
+    table = votable.get_first_table().to_table(use_names_over_ids=True)
+    return table.to_pandas()
+
+
+LCdatas = glob.glob("./LCdata/*.xml")
 
 for index, LCdata in enumerate(LCdatas):
     print("\n", index, LCdata)
 
     try:
-        LC = pd.read_csv(LCdata, delim_whitespace=False, index_col=False)
-        LC = LC[:].values
-        LC = pd.DataFrame(LC,
-                          columns=['index', 'BJD', 'phase', 'raw_flux', 'raw_err', 'corr_flux', 'corr_err', 'dtr_flux',
-                                   'dtr_err', 'blanc'])
-        LC = LC.drop('index', axis=1)
-        LC = LC.drop('phase', axis=1)
-        LC = LC.drop('raw_err', axis=1)
+        LC = votable_to_pandas(LCdata)
 
-        LC['BJD'] = LC['BJD'] + 2400000
-        LC.index = pd.to_datetime(LC['BJD'], origin='julian', unit='D')
-        LC = LC.drop('BJD', axis=1)
+        LC = LC.drop('source_id', axis=1)
+        LC = LC.drop('band', axis=1)
+        LC = LC.drop('mag', axis=1)
+        LC = LC.drop('flux_error', axis=1)
+        LC = LC.drop('flux_over_error', axis=1)
+        LC = LC.drop('transit_id', axis=1)
+        LC = LC.drop('rejected_by_photometry', axis=1)
+        LC = LC.drop('rejected_by_variability', axis=1)
+        LC = LC.drop('other_flags', axis=1)
+        LC = LC.drop('solution_id', axis=1)
+
+        LC['flux'] = preprocessing.normalize([LC['flux']])[0]
+
+        LC['time'] = LC['time'] + 2450000
+        LC.index = pd.to_datetime(LC['time'], origin='julian', unit='D')
+        LC = LC.drop('time', axis=1)
         timeSeries = TimeSeries.from_pandas(LC)
 
-        T0 = float(os.path.basename(LCdata).split("_")[4])
-        T0 = T0 + 2400000
+        T0 = float(os.path.basename(LCdata).split("_")[3])
+        T0 = T0 + 2450000
         T0 = pd.to_datetime(T0, origin='julian', unit='D')
         T0 = Time(T0, format='datetime')
-        P = float(os.path.basename(LCdata).split("_")[6][:-4])
+        P = 1 / float(os.path.basename(LCdata).split("_")[5][:-4])
 
         ts_folded = timeSeries.fold(period=P * u.day, epoch_time=T0)
-        ts_binned = aggregate_downsample(ts_folded, time_bin_size=10 * u.min, aggregate_func=np.nanmedian)
-        #print(ts_binned)
+        print(ts_folded)
+        #ts_binned = aggregate_downsample(ts_folded, time_bin_start=ts_folded['time'], n_bins=len(ts_folded['time']), aggregate_func=np.nanmedian)
+        ts_binned = aggregate_downsample(ts_folded, time_bin_size=0.1 * u.min, aggregate_func=np.nanmedian)
+        print(ts_binned)
 
         xdata = ts_binned.time_bin_start.jd
         xdata = xdata / (-xdata[0] * 2)
-        print(xdata)
-        ydata = ts_binned['dtr_flux']
-        print(ydata)
-
+        ydata = ts_binned['flux']
+        print(ydata.info)
 
         # Define a Fit object for this model and data
-        fit = Fit(model_dict, x=xdata, y=ydata)
+        fit = Fit(model_dict, x=xdata, y=ydata, minimizer=[NelderMead, BFGS])
         fit_result = fit.execute()
         # print(fit_result)
 
         df1 = pd.DataFrame(fit_result.params, index=[0])
         df1.insert(0, 'P', P)
         df1.insert(0, 'T0', float(os.path.basename(LCdata).split("_")[4]))
-        morph = float(os.path.basename(LCdata).split("_")[2])
-        df1.insert(0, 'morph', morph)
         df1.insert(0, 'ID', os.path.basename(LCdata).split("_")[0])
-
-        label = ""
-
-        if morph <= 0.4:
-            label = "Detached"
-        elif morph <= 0.7:
-            label = "SemiDetached"
-        elif morph <= 0.8:
-            label = "OverContact"
-        else:
-            label = "Ellipsoidal"
-
-        df1['label'] = label
 
         df = pd.concat([df, df1], ignore_index=True)
 
         # Plot the result
         plt.plot(xdata, ydata, color='black', ls=':')
         plt.plot(xdata, fit.model(x=xdata, **fit_result.params).y, color='red', ls='-')
-        plt.savefig(folderName + '/' + label + '/' + os.path.basename(LCdata)[:-4] + '.png')
+        plt.savefig(folderName + '/' + os.path.basename(LCdata)[:-4] + '.png')
         plt.close()
 
     except Exception as e:
         print(f"{e} Error")
 
-df.to_csv('FourierCoeffs_Kepler.csv', index=False)
+df.to_csv('FourierCoeffs_Gaia.csv', index=False)
