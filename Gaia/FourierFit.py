@@ -91,7 +91,9 @@ for index, LCdata in enumerate(LCdatas):
         print(ts_folded)
         #ts_binned = aggregate_downsample(ts_folded, time_bin_start=ts_folded['time'], n_bins=len(ts_folded['time']), aggregate_func=np.nanmedian)
         ts_binned = aggregate_downsample(ts_folded, time_bin_size=0.1 * u.min, aggregate_func=np.nanmedian)
-        print(ts_binned)
+        #ts_binned = ts_binned[ts_binned['flux'] != '--']
+        print(ts_binned['flux'])
+
 
         xdata = ts_binned.time_bin_start.jd
         xdata = xdata / (-xdata[0] * 2)
