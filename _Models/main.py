@@ -4,7 +4,7 @@ from keras.callbacks import ModelCheckpoint, EarlyStopping
 from keras.src.utils import to_categorical
 from sklearn.model_selection import train_test_split
 import data
-import model
+import models
 
 now1 = datetime.datetime.now()
 print("Time start: ", now1)
@@ -35,11 +35,11 @@ checkpoint = ModelCheckpoint(
 
 earlystop = EarlyStopping(monitor='val_accuracy', patience=5, verbose=1)
 
-mymodel = model.sequential()
-history = mymodel.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=10, verbose=1,
-                      callbacks=[checkpoint, earlystop])  # , batch_size=256 ,
+model = models.sequential()
+history = model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=10, verbose=1,
+                    callbacks=[checkpoint, earlystop])  # , batch_size=256 ,
 
-test = mymodel.evaluate(x_test, y_test)
+test = model.evaluate(x_test, y_test)
 print("test loss, test acc:", test)
 
 """

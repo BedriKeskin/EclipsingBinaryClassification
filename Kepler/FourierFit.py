@@ -14,7 +14,7 @@ df = pd.DataFrame(
     columns=['ID', 'morph', 'T0', 'P', 'a0', 'a1', 'a10', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'w', 'label'])
 
 order = 10
-folderName = "PNG" + str(order) + "_withoutSine"
+folderName = "PNG" + str(order) + "_withoutSine_BJD"
 
 if not os.path.exists(folderName):
     os.makedirs(folderName)
@@ -82,16 +82,20 @@ for index, LCdata in enumerate(LCdatas):
         T0 = Time(T0, format='datetime')
         P = float(os.path.basename(LCdata).split("_")[6][:-4])
 
+        x = (max(timeSeries['time']) - min(timeSeries['time']))
+        print(x.dt.days )
+        timeSeries
+        P = P * x.astype(int)
+
         ts_folded = timeSeries.fold(period=P * u.day, epoch_time=T0)
         ts_binned = aggregate_downsample(ts_folded, time_bin_size=10 * u.min, aggregate_func=np.nanmedian)
-        #print(ts_binned)
+        # print(ts_binned)
 
         xdata = ts_binned.time_bin_start.jd
         xdata = xdata / (-xdata[0] * 2)
         print(xdata)
         ydata = ts_binned['dtr_flux']
         print(ydata)
-
 
         # Define a Fit object for this model and data
         fit = Fit(model_dict, x=xdata, y=ydata)
@@ -127,6 +131,6 @@ for index, LCdata in enumerate(LCdatas):
         plt.close()
 
     except Exception as e:
-        print(f"{e} Error")
+        print(f"Error: {e}")
 
 df.to_csv('FourierCoeffs_Kepler.csv', index=False)

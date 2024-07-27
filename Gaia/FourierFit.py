@@ -1,5 +1,8 @@
 import glob
 import os
+import shutil
+from random import sample
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -10,15 +13,17 @@ from astropy.timeseries import aggregate_downsample
 from symfit import parameters, variables, sin, cos, Fit
 from astropy.io.votable import parse
 from symfit.core.minimizers import NelderMead, BFGS
-from sklearn import preprocessing
+# from sklearn import preprocessing
 
-np.set_printoptions(threshold=np.inf)
+# np.set_printoptions(threshold=np.inf)
 
 df = pd.DataFrame(
     columns=['ID', 'T0', 'P', 'a0', 'a1', 'a10', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'w'])
 
 order = 10
 folderName = "PNG" + str(order) + "_withoutSine"
+
+shutil.rmtree(folderName)
 
 if not os.path.exists(folderName):
     os.makedirs(folderName)
@@ -57,15 +62,17 @@ def votable_to_pandas(votable_file):
 
 LCdatas = glob.glob("./LCdata/*.xml")
 
-for index, LCdata in enumerate(LCdatas):
+for index, LCdata in enumerate(LCdatas):  # (sample(LCdatas, 100)):
     print("\n", index, LCdata)
 
     try:
         LC = votable_to_pandas(LCdata)
+        LC = LC[LC['band'] == 'G']  # G band only
+        LC = LC[LC['rejected_by_photometry'] == False]
+        LC = LC[LC['rejected_by_variability'] == False]
 
         LC = LC.drop('source_id', axis=1)
-        LC = LC.drop('band', axis=1)
-        LC = LC.drop('mag', axis=1)
+        LC = LC.drop('flux', axis=1)
         LC = LC.drop('flux_error', axis=1)
         LC = LC.drop('flux_over_error', axis=1)
         LC = LC.drop('transit_id', axis=1)
@@ -73,10 +80,13 @@ for index, LCdata in enumerate(LCdatas):
         LC = LC.drop('rejected_by_variability', axis=1)
         LC = LC.drop('other_flags', axis=1)
         LC = LC.drop('solution_id', axis=1)
+        LC = LC.drop('band', axis=1)
 
-        LC['flux'] = preprocessing.normalize([LC['flux']])[0]
-
+        LC.sort_values(by=['time'], inplace=True)
         LC['time'] = LC['time'] + 2450000
+        LC['mag'] = -1 * LC['mag']
+        # LC['mag'] = preprocessing.normalize([LC['mag']])[0]
+
         LC.index = pd.to_datetime(LC['time'], origin='julian', unit='D')
         LC = LC.drop('time', axis=1)
         timeSeries = TimeSeries.from_pandas(LC)
@@ -88,17 +98,15 @@ for index, LCdata in enumerate(LCdatas):
         P = 1 / float(os.path.basename(LCdata).split("_")[5][:-4])
 
         ts_folded = timeSeries.fold(period=P * u.day, epoch_time=T0)
-        print(ts_folded)
-        #ts_binned = aggregate_downsample(ts_folded, time_bin_start=ts_folded['time'], n_bins=len(ts_folded['time']), aggregate_func=np.nanmedian)
         ts_binned = aggregate_downsample(ts_folded, time_bin_size=0.1 * u.min, aggregate_func=np.nanmedian)
-        binindex = ~np.isnan(ts_binned.to_pandas().to_numpy()[:,1])
-        ts_binned = ts_binned[binindex]
-        print(ts_binned['flux'])
+        # non_n_bad_indexes = ~np.isnan(ts_binned.to_pandas().to_numpy()[:, 1])
+        # ts_binned = ts_binned[non_n_bad_indexes]
+        print(f"ts_binned : {len(ts_binned)}")
 
         xdata = ts_binned.time_bin_start.jd
         xdata = xdata / (-xdata[0] * 2)
-        ydata = ts_binned['flux']
-        print(ydata.info)
+        # ydata = ts_binned['flux']
+        ydata = ts_binned['mag']
 
         # Define a Fit object for this model and data
         fit = Fit(model_dict, x=xdata, y=ydata, minimizer=[NelderMead, BFGS])
@@ -107,18 +115,20 @@ for index, LCdata in enumerate(LCdatas):
 
         df1 = pd.DataFrame(fit_result.params, index=[0])
         df1.insert(0, 'P', P)
-        df1.insert(0, 'T0', float(os.path.basename(LCdata).split("_")[4]))
+        df1.insert(0, 'T0', float(os.path.basename(LCdata).split("_")[3]))
         df1.insert(0, 'ID', os.path.basename(LCdata).split("_")[0])
 
         df = pd.concat([df, df1], ignore_index=True)
 
         # Plot the result
-        plt.plot(xdata, ydata, color='black', ls=':')
+        plt.plot(xdata, ydata, color='black', marker='.', ls='')
         plt.plot(xdata, fit.model(x=xdata, **fit_result.params).y, color='red', ls='-')
+        # plt.show(block=False)
         plt.savefig(folderName + '/' + os.path.basename(LCdata)[:-4] + '.png')
-        plt.close()
+        # plt.pause(0.5)
+        plt.close('all')
 
     except Exception as e:
-        print(f"{e} Error")
+        print(f"Error: {e}")
 
 df.to_csv('FourierCoeffs_Gaia.csv', index=False)
