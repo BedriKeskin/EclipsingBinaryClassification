@@ -1,17 +1,18 @@
 import glob
 import os
+import shutil
+from random import sample
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from astropy import units as u
-from astropy.io.votable import parse
 from astropy.time import Time
 from astropy.timeseries import TimeSeries
 from astropy.timeseries import aggregate_downsample
-from symfit import parameters, variables, cos, Fit
+from symfit import parameters, variables, sin, cos, Fit
+from astropy.io.votable import parse
 from symfit.core.minimizers import NelderMead, BFGS
-
 # from sklearn import preprocessing
 
 # np.set_printoptions(threshold=np.inf)
@@ -20,7 +21,9 @@ df = pd.DataFrame(
     columns=['ID', 'T0', 'P', 'a0', 'a1', 'a10', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'w'])
 
 order = 10
-folderName = "PNG" + str(order) + "_withoutSine"
+folderName = "PNG" + str(order) + "_Time"
+
+#shutil.rmtree(folderName)
 
 if not os.path.exists(folderName):
     os.makedirs(folderName)
@@ -94,7 +97,7 @@ for index, LCdata in enumerate(LCdatas):  # (sample(LCdatas, 100)):
         T0 = Time(T0, format='datetime')
         P = 1 / float(os.path.basename(LCdata).split("_")[5][:-4])
 
-        ts_folded = timeSeries.fold(period=P * u.day, epoch_time=T0)
+        ts_folded = timeSeries.fold(period=2*P * u.day, epoch_time=T0)
         ts_binned = aggregate_downsample(ts_folded, time_bin_size=0.1 * u.min, aggregate_func=np.nanmedian)
         # non_n_bad_indexes = ~np.isnan(ts_binned.to_pandas().to_numpy()[:, 1])
         # ts_binned = ts_binned[non_n_bad_indexes]
@@ -120,9 +123,9 @@ for index, LCdata in enumerate(LCdatas):  # (sample(LCdatas, 100)):
         # Plot the result
         plt.plot(xdata, ydata, color='black', marker='.', ls='')
         plt.plot(xdata, fit.model(x=xdata, **fit_result.params).y, color='red', ls='-')
-        # plt.show(block=False)
+        plt.show(block=False)
         plt.savefig(folderName + '/' + os.path.basename(LCdata)[:-4] + '.png')
-        # plt.pause(0.5)
+        plt.pause(0.5)
         plt.close('all')
 
     except Exception as e:

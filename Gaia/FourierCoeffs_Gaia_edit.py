@@ -1,4 +1,4 @@
-# FourierCoeffs_Gaia.csv'nin sonundaki Villanova ID,morph,Villanova Class sütunlarını doldurur
+# FourierCoeffs_Gaia.csv'nin sonundaki Villanova ID,morph,Villanova Class sütunlarını doldurmak için yazmıştım bu scripti
 
 import pandas as pd
 import querySimbad
