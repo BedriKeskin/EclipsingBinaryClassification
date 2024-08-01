@@ -21,7 +21,7 @@ df = pd.DataFrame(
     columns=['ID', 'T0', 'P', 'a0', 'a1', 'a10', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'w'])
 
 order = 10
-folderName = "PNG" + str(order) + "_Time"
+folderName = "PNG" + str(order) + "_2xP"
 
 #shutil.rmtree(folderName)
 
@@ -62,7 +62,7 @@ def votable_to_pandas(votable_file):
 
 LCdatas = glob.glob("./LCdata/*.xml")
 
-for index, LCdata in enumerate(LCdatas):  # (sample(LCdatas, 100)):
+for index, LCdata in enumerate(LCdatas[:100]):  # (sample(LCdatas, 100)):
     print("\n", index, LCdata)
 
     try:
@@ -123,12 +123,12 @@ for index, LCdata in enumerate(LCdatas):  # (sample(LCdatas, 100)):
         # Plot the result
         plt.plot(xdata, ydata, color='black', marker='.', ls='')
         plt.plot(xdata, fit.model(x=xdata, **fit_result.params).y, color='red', ls='-')
-        plt.show(block=False)
+        #plt.show(block=False)
         plt.savefig(folderName + '/' + os.path.basename(LCdata)[:-4] + '.png')
-        plt.pause(0.5)
+        #plt.pause(0.5)
         plt.close('all')
 
     except Exception as e:
         print(f"Error: {e}")
 
-df.to_csv('FourierCoeffs_Gaia.csv', index=False)
+df.to_csv('FourierCoeffs_Gaia_2xP.csv', index=False)
