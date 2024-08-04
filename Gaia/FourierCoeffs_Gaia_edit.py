@@ -1,7 +1,23 @@
-# FourierCoeffs_Gaia.csv'nin sonundaki Villanova ID,morph,Villanova Class sütunlarını doldurmak için yazmıştım bu scripti
+# FourierCoeffs_Gaia_3xP.csv'nin sonundaki Villanova ID,morph,
+# Villanova Class sütunlarını doldurmak için
 
 import pandas as pd
 import querySimbad
+
+file_1xP = '/Users/tiga/Documents/EclipsingBinaryClassification/Gaia/FourierCoeffs_Gaia_1xP.csv'
+Gaia_1xP = pd.read_csv(file_1xP, delim_whitespace=False, index_col=False)
+Gaia_1xP = Gaia_1xP.loc[:, 'Villanova ID':'Villanova Class']
+
+file_3xP = '/Users/tiga/Documents/EclipsingBinaryClassification/Gaia/FourierCoeffs_Gaia_3xP.csv'
+Gaia_3xP = pd.read_csv(file_3xP, delim_whitespace=False, index_col=False)
+result = pd.concat([Gaia_3xP, Gaia_1xP], axis=1)
+print(result)
+result.to_csv(file_3xP, index=False)
+
+aşağıdakikodçalışmasın
+
+# FourierCoeffs_Gaia.csv'nin sonundaki Villanova ID,morph,
+# Villanova Class sütunlarını doldurmak için yazmıştım bu scripti
 
 Kepler = pd.read_csv("/Users/tiga/Documents/EclipsingBinaryClassification/Kepler/FourierCoeffs_Kepler.csv",
                      delim_whitespace=False, index_col=False)

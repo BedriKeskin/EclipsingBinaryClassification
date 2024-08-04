@@ -8,11 +8,11 @@ import seaborn as sns
 from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
 import models
 
-Kepler = pd.read_csv("/Users/tiga/Documents/EclipsingBinaryClassification/Kepler/FourierCoeffs_Kepler.csv",
+Kepler = pd.read_csv("/Users/tiga/Documents/EclipsingBinaryClassification/Kepler/FourierCoeffs_Kepler_3xP.csv",
                      delim_whitespace=False, index_col=False)
 Kepler2 = Kepler.loc[:, 'a0':'label']
 
-Tess = pd.read_csv("/Users/tiga/Documents/EclipsingBinaryClassification/Tess/FourierCoeffs_TESS.csv",
+Tess = pd.read_csv("/Users/tiga/Documents/EclipsingBinaryClassification/Tess/FourierCoeffs_TESS_3xP.csv",
                    delim_whitespace=False, index_col=False)
 Tess2 = Tess.loc[:, 'a0':'label']
 
@@ -38,7 +38,7 @@ loss, accuracy = model.evaluate(X_test.reshape(-1, X_test.shape[1], 1), y_test)
 print(f'loss: {loss}, accuracy: {accuracy}')
 
 # prediction
-file = '/Users/tiga/Documents/EclipsingBinaryClassification/Gaia/FourierCoeffs_Gaia.csv'
+file = '/Users/tiga/Documents/EclipsingBinaryClassification/Gaia/FourierCoeffs_Gaia_3xP.csv'
 Gaia = pd.read_csv(file)
 Gaia2 = Gaia.loc[:, 'a0':'w']
 array = Gaia2.to_numpy()
@@ -70,8 +70,8 @@ print(f'F1 score: {f1}')
 
 plt.figure(figsize=(8, 6))
 sns.heatmap(cm_df, annot=True, fmt='d', cmap='Blues')
-plt.title('ConfusionMatrix_FourierCoeffs')
+plt.title('ConfusionMatrix_FourierCoeffs_3xP')
 plt.ylabel('Kepler&TESS')
 plt.xlabel('DR3')
-plt.savefig('ConfusionMatrix_FourierCoeffs')
+plt.savefig('ConfusionMatrix_FourierCoeffs_3xP')
 plt.close()
