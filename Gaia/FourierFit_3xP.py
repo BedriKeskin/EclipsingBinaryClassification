@@ -11,9 +11,9 @@ from astropy.time import Time
 from astropy.timeseries import TimeSeries
 from astropy.timeseries import aggregate_downsample
 from symfit import parameters, variables, sin, cos, Fit
-from astropy.io.votable import parse
 from symfit.core.minimizers import NelderMead, BFGS
 # from sklearn import preprocessing
+import data
 
 # np.set_printoptions(threshold=np.inf)
 
@@ -54,20 +54,13 @@ w, = parameters('w')
 model_dict = {y: fourier_series(x, f=w, n=order)}
 print(model_dict)
 
-
-def votable_to_pandas(votable_file):
-    votable = parse(votable_file)
-    table = votable.get_first_table().to_table(use_names_over_ids=True)
-    return table.to_pandas()
-
-
 LCdatas = glob.glob("./LCdata/*.xml")
 
 for index, LCdata in enumerate(LCdatas[:100]):  # (sample(LCdatas, 100)):
     print("\n", index, LCdata)
 
     try:
-        LC = votable_to_pandas(LCdata)
+        LC = data.votable_to_pandas(LCdata)
         LC = LC[LC['band'] == 'G']  # G band only
         LC = LC[LC['rejected_by_photometry'] == False]
         LC = LC[LC['rejected_by_variability'] == False]

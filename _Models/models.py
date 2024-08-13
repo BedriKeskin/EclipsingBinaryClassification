@@ -83,3 +83,15 @@ def sequential2(X_train):
         Dense(4, activation='softmax')
     ])
     return model
+
+
+def flux(X_train):
+    model = Sequential()
+    model.add(
+        Masking(mask_value=0., input_shape=(X_train.shape[1], 1)))  # Masking katmanı, padding değerlerinin öğrenilmesini önler
+    model.add(LSTM(64, return_sequences=False))
+    model.add(Dense(4, activation='softmax'))
+
+    model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+
+    return model

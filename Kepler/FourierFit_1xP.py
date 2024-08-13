@@ -83,8 +83,7 @@ for index, LCdata in enumerate(LCdatas):
         P = float(os.path.basename(LCdata).split("_")[6][:-4])
 
         x = (max(timeSeries['time']) - min(timeSeries['time']))
-        print(x.dt.days )
-        timeSeries
+        print(x.dt.days)
         P = P * x.astype(int)
 
         ts_folded = timeSeries.fold(period=P * u.day, epoch_time=T0)

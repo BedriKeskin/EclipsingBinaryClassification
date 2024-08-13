@@ -13,6 +13,7 @@ import pandas as pd
 from keras.applications.vgg16 import preprocess_input
 from keras.utils import img_to_array
 from keras.utils import load_img
+import globals
 
 KeplerTessGaia = pd.read_csv('../Gaia/KeplerTessGaia.csv', index_col=False,
                              dtype={"KIC": "string", "TIC": "string", "DR3": "string"})
@@ -38,13 +39,13 @@ for index, png in enumerate(DR3PNG):
     maxValue, index = max([(value, index) for index, value in enumerate(prediction[0])])
 
     if index == 0:
-        Type = "Detached"
+        Type = globals.Roche.Detached.name
     elif index == 1:
-        Type = "SemiDetached"
+        Type = globals.Roche.SemiDetached.name
     elif index == 2:
-        Type = "OverContact"
+        Type = globals.Roche.OverContact.name
     elif index == 3:
-        Type = "Ellipsoidal"
+        Type = globals.Roche.Ellipsoidal.name
 
     DR3ID = Path(png).stem
     KeplerTessGaia.loc[KeplerTessGaia['DR3'] == DR3ID, 'Prediction'] = ', '.join(
