@@ -16,7 +16,6 @@ from astropy.time import Time
 from astropy.timeseries import TimeSeries
 from astropy.timeseries import aggregate_downsample
 from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
-from sklearn.preprocessing import LabelEncoder
 
 import globals
 
@@ -195,6 +194,6 @@ sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=labels, yticklabe
 plt.xlabel('Predicted Labels')
 plt.ylabel('True Labels')
 plt.title('Confusion Matrix_Flux_Gaia')
-plt.savefig('ConfusionMatrix_Kepler_Flux_Gaia')
+plt.savefig('ConfusionMatrix_Flux_Gaia')
 
 KeplerTessGaia.to_csv("KeplerTessGaia_Predict_Sequential.csv", encoding='utf-8', index=False)
