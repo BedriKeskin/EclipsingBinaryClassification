@@ -22,6 +22,14 @@ class Roche(Enum):
     Ellipsoidal = 3
 
 
+def GetLabels(Enumeration):
+    labels = []
+    for item in Enumeration:
+        labels.append(item.name)
+
+    return labels
+
+
 def GetLabel(morph):
     if morph <= 0.4:
         label = Roche.Detached.name

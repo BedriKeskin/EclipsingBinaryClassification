@@ -1,5 +1,5 @@
 import keras
-from keras.applications import VGG19
+from keras.applications.vgg19 import VGG19
 from keras.layers import *
 from keras.layers import Conv2D, MaxPooling2D, Dense, Flatten, Dropout  # import needed layers
 from keras.metrics import Recall, Precision
