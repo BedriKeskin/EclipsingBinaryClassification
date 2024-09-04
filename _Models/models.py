@@ -5,8 +5,50 @@ from keras.layers import Conv2D, MaxPooling2D, Dense, Flatten, Dropout  # import
 from keras.metrics import Recall, Precision
 from keras.models import Sequential  # import sequential API. Sequential is good for 1 data input.
 from keras.src.layers import BatchNormalization
+from keras.optimizers import Adam
+from keras.preprocessing.image import ImageDataGenerator
+from keras.regularizers import l2
 
 import globals
+
+
+def create_datagen():
+    return ImageDataGenerator(
+        rotation_range=20,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
+        shear_range=0.2,
+        zoom_range=0.2,
+        horizontal_flip=True,
+        fill_mode='nearest'
+    )
+
+
+def vgg19_Berk():
+    vgg19_model = VGG19(
+        input_shape=(globals.PNG_size[0], globals.PNG_size[1], 3),
+        weights='imagenet',  # Use pre-trained weights from ImageNet
+        include_top=False,  # Do not include the top fully connected layers
+        classes=4
+    )
+
+    # Set only the last block of the VGG19 model to be trainable
+    for layer in vgg19_model.layers[:-4]:
+        layer.trainable = False
+
+    model = Sequential()
+    model.add(vgg19_model)
+    model.add(Flatten())
+    model.add(Dense(512, activation='relu', kernel_initializer='he_uniform', kernel_regularizer=l2(0.01)))
+    model.add(BatchNormalization())
+    model.add(Dropout(0.5))
+    model.add(Dense(4, activation='softmax'))
+
+    model.compile(optimizer=Adam(learning_rate=0.001),
+                  loss='categorical_crossentropy',
+                  metrics=['accuracy', Precision(), Recall()])
+
+    return model
 
 
 def vgg19():
@@ -88,7 +130,8 @@ def sequential2(X_train):
 def flux(X_train):
     model = Sequential()
     model.add(
-        Masking(mask_value=0., input_shape=(X_train.shape[1], 1)))  # Masking katmanı, padding değerlerinin öğrenilmesini önler
+        Masking(mask_value=0.,
+                input_shape=(X_train.shape[1], 1)))  # Masking katmanı, padding değerlerinin öğrenilmesini önler
     model.add(LSTM(64, return_sequences=False))
     model.add(Dense(4, activation='softmax'))
 

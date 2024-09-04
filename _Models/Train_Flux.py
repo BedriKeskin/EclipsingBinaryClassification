@@ -79,7 +79,7 @@ for index, file in enumerate(LCdataKepler):
         plt.close()
 
     except Exception as e:
-        print("Error: ",e, file)
+        print("Error: ", e, file)
 
 print("len(FluxesKepler): ", len(FluxesKepler))
 
@@ -138,7 +138,7 @@ for index, file in enumerate(LCdataTess):
         plt.close()
 
     except Exception as e:
-        print("Error: ",e, file)
+        print("Error: ", e, file)
 
 print("len(FluxesTess): ", len(FluxesTess))
 

@@ -31,7 +31,7 @@ def GetLabels(Enumeration):
 
 
 def GetLabel(morph):
-    if morph <= 0.4:
+    if morph <= 0.5:
         label = Roche.Detached.name
     elif morph <= 0.7:
         label = Roche.SemiDetached.name
@@ -60,7 +60,7 @@ def ImagesLabels(pngFiles):
 
             Morph = float(os.path.basename(png).split("_")[2])
 
-            if Morph <= 0.4:
+            if Morph <= 0.5:
                 labels.append(Roche.Detached.value)
             elif Morph <= 0.7:
                 labels.append(Roche.SemiDetached.value)

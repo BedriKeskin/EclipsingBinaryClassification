@@ -5,16 +5,16 @@
 
 import glob
 import os
+import shutil
+from pathlib import Path
 
 import keras
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from astropy import units as u
-from astropy.time import Time
-from astropy.timeseries import TimeSeries
-from astropy.timeseries import aggregate_downsample
+from keras.applications.vgg16 import preprocess_input
+from keras.preprocessing.image import img_to_array, load_img
 from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
 
 import globals
@@ -26,9 +26,8 @@ KeplerTessGaia.insert(7, "Prediction", "")
 KeplerTessGaia.insert(8, "DR3ClassPrediction", "")
 KeplerTessGaia.insert(9, "maxValue", np.NaN)
 
-'''
 # Sequential
-model = keras.saving.load_model('./Sequential_20240518-094535.keras')
+model = keras.saving.load_model('/Users/tiga/Library/CloudStorage/GoogleDrive-bedri.keskin@gmail.com/My Drive/Doktora/Vgg19_Berk_20240825-125419.keras')
 
 DR3PNG = glob.glob("../Gaia/PNGMowlaviFit/*.png")
 
@@ -59,9 +58,9 @@ for index, png in enumerate(DR3PNG):
     KeplerTessGaia.loc[KeplerTessGaia['DR3'] == DR3ID, 'DR3ClassPrediction'] = Type
     KeplerTessGaia.loc[KeplerTessGaia['DR3'] == DR3ID, 'maxValue'] = maxValue
     filename = DR3ID + "_" + str(maxValue) + ".png"
-    shutil.copyfile(png, os.path.join("./PNGMowlaviFit_Sequential/" + Type, filename))
- '''
+    shutil.copyfile(png, os.path.join("./PNGMowlaviFit_Berk/" + Type, filename))
 
+'''
 # Flux
 model = keras.saving.load_model('./Flux_20240814-010156.keras')
 
@@ -170,8 +169,9 @@ for index, file in enumerate(LCdatas):  # (sample(LCdatas, 100)):
 
     except Exception as e:
         print("Error: ", e, file)
+'''
 
-KeplerTessGaia.to_csv("KeplerTessGaia_Predict_Flux.csv", encoding='utf-8', index=False)
+KeplerTessGaia.to_csv("KeplerTessGaia_Predict_Berk.csv", encoding='utf-8', index=False)
 
 true_labels = KeplerTessGaia['KeplerClass'].fillna('') + KeplerTessGaia['TessClass'].fillna('')
 predicted_class_names = KeplerTessGaia['DR3ClassPrediction']
@@ -193,7 +193,5 @@ plt.figure(figsize=(8, 6))
 sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=labels, yticklabels=labels)
 plt.xlabel('Predicted Labels')
 plt.ylabel('True Labels')
-plt.title('Confusion Matrix_Flux_Gaia')
-plt.savefig('ConfusionMatrix_Flux_Gaia')
-
-KeplerTessGaia.to_csv("KeplerTessGaia_Predict_Sequential.csv", encoding='utf-8', index=False)
+plt.title('Confusion Matrix_-_Gaia')
+plt.savefig('ConfusionMatrix_Berk_Gaia')
