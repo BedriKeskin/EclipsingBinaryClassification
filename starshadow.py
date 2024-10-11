@@ -2,6 +2,33 @@ import star_shadow as sts
 import pandas as pd
 import glob
 
+
+#Tess
+LCdatas = glob.glob("/Users/bedrikeskin/EclipsingBinaryClassification/Tess/LCdata/*.csv")
+
+for index, LCdata in enumerate(LCdatas):
+    print("\n", index, LCdata)
+
+    try:
+        LC = pd.read_csv(LCdata, delim_whitespace=False, index_col=False)
+        LC = LC[:].values
+        LC = pd.DataFrame(LC, columns=['index', 'BJD', 'ColA', 'NormalizedFlux', 'ColC'])
+
+        LC = LC.drop('index', axis=1)
+        LC = LC.drop('ColA', axis=1)
+
+        LC['BJD'] = LC['BJD'] + 2450000
+
+        LC.to_csv(LCdata + '.txt', sep=' ', index=False, header=False)
+
+        sts.analyse_lc_from_file(LCdata + '.txt', p_orb=0, i_sectors=None, stage='all', method='fitter', data_id='none',
+                             save_dir=None, overwrite=False, verbose=True)
+
+    except Exception as e:
+        print(f"{e} Error")
+
+öööö
+# Kepler
 LCdatas = glob.glob("/Users/bedrikeskin/EclipsingBinaryClassification/Kepler/LCdata/*.csv")
 
 for index, LCdata in enumerate(LCdatas):
