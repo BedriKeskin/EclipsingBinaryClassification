@@ -8,6 +8,14 @@ from astropy import units as u
 from astropy.time import Time
 from astropy.timeseries import TimeSeries
 from astropy.timeseries import aggregate_downsample
+from scipy.ndimage import uniform_filter1d
+from scipy.signal import savgol_filter
+import statsmodels.api as sm
+from scipy.signal import medfilt
+from sklearn.ensemble import IsolationForest
+
+
+LCdatas = glob.glob("./LCdata/*.csv")
 
 if not os.path.exists("PNG"):
     os.makedirs("PNG")
