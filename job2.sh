@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -p orfoz        # Kuyruk adi: Uzerinde GPU olan kuyruk olmasina dikkat edin.
+#SBATCH -p kolyoz-cuda        # Kuyruk adi: Uzerinde GPU olan kuyruk olmasina dikkat edin.
 #SBATCH -A bkeskin       # Kullanici adi
 #SBATCH -J StarShadow        # Gonderilen isin ismi
 #SBATCH -o StarShadow.out    # Ciktinin yazilacagi dosya adi
