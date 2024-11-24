@@ -9,8 +9,8 @@ from astropy import units as u
 from astropy.time import Time
 from astropy.timeseries import TimeSeries
 from astropy.timeseries import aggregate_downsample
-from keras.callbacks import ModelCheckpoint, EarlyStopping
-from keras.preprocessing.sequence import pad_sequences
+from keras.api.callbacks import ModelCheckpoint, EarlyStopping
+from keras.api.preprocessing.sequence import pad_sequences
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 

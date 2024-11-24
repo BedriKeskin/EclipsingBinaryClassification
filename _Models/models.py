@@ -1,19 +1,21 @@
+import tensorflow as tf
+
 import keras
 from keras.applications.vgg19 import VGG19
 from keras.layers import *
 from keras.layers import Conv2D, MaxPooling2D, Dense, Flatten, Dropout  # import needed layers
 from keras.metrics import Recall, Precision
 from keras.models import Sequential  # import sequential API. Sequential is good for 1 data input.
-from keras.src.layers import BatchNormalization
+from keras.src.layers import BatchNormalization, Activation
 from keras.optimizers import Adam
-from keras.preprocessing.image import ImageDataGenerator
+
 from keras.regularizers import l2
 
 import globals
 
 
 def create_datagen():
-    return ImageDataGenerator(
+    return tf.keras.preprocessing.image.ImageDataGenerator(
         rotation_range=20,
         width_shift_range=0.2,
         height_shift_range=0.2,
@@ -24,12 +26,12 @@ def create_datagen():
     )
 
 
-def vgg19_Berk():
+def vgg19_Berk(classes):
     vgg19_model = VGG19(
         input_shape=(globals.PNG_size[0], globals.PNG_size[1], 3),
         weights='imagenet',  # Use pre-trained weights from ImageNet
         include_top=False,  # Do not include the top fully connected layers
-        classes=4
+        classes=classes
     )
 
     # Set only the last block of the VGG19 model to be trainable
@@ -42,21 +44,21 @@ def vgg19_Berk():
     model.add(Dense(512, activation='relu', kernel_initializer='he_uniform', kernel_regularizer=l2(0.01)))
     model.add(BatchNormalization())
     model.add(Dropout(0.5))
-    model.add(Dense(4, activation='softmax'))
+    model.add(Dense(classes, activation='softmax'))
 
     model.compile(optimizer=Adam(learning_rate=0.001),
                   loss='categorical_crossentropy',
-                  metrics=['accuracy', Precision(), Recall()])
+                  metrics=['accuracy', 'Precision', 'Recall'])
 
     return model
 
 
-def vgg19():
+def vgg19(classes):
     vgg19_model = VGG19(
         input_shape=(globals.PNG_size[0], globals.PNG_size[1], 3),
         weights=None,  # bu None olacak
         include_top=True,  # bu true olacak
-        classes=4
+        classes=classes
     )
 
     for layer in vgg19_model.layers:
@@ -67,17 +69,17 @@ def vgg19():
 
     model.compile(optimizer=keras.optimizers.Adam(learning_rate=0.001),
                   loss="categorical_crossentropy",
-                  metrics=['accuracy', Precision(), Recall()], )
+                  metrics=['accuracy', 'Precision', 'Recall'])
 
     return model
 
 
-def vgg19_2():
+def vgg19_2(classes):
     vgg19_model = VGG19(
         input_shape=(globals.PNG_size[0], globals.PNG_size[1], 3),
         weights=None,  # bu None olacak
         include_top=True,  # bu true olacak
-        classes=4
+        classes=classes
     )
 
     for layer in vgg19_model.layers:
@@ -91,11 +93,11 @@ def vgg19_2():
     model.add(Dense(512, kernel_initializer='he_uniform'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
-    model.add(Dense(4, activation='softmax'))
+    model.add(Dense(classes, activation='softmax'))
 
     model.compile(optimizer=keras.optimizers.Adam(learning_rate=0.001),
                   loss="categorical_crossentropy",
-                  metrics=['accuracy', Precision(), Recall()], )
+                  metrics=['accuracy', 'Precision', 'Recall'])
 
     return model
 

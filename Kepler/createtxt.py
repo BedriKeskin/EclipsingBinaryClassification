@@ -12,10 +12,10 @@ from scipy.ndimage import uniform_filter1d
 from scipy.signal import savgol_filter
 import statsmodels.api as sm
 from scipy.signal import medfilt
-from sklearn.ensemble import IsolationForest
+#from sklearn.ensemble import IsolationForest
 
 
-folder = "StarShadow"
+folder = "StarShadow2"
 if not os.path.exists(folder):
     os.makedirs(folder)
 
@@ -59,27 +59,27 @@ for index, LCdata in enumerate(LCdatas):
 
         LC['bjd'] = LC['bjd'] + 2400000
 
-        fig, axs = plt.subplots(1, 2)
-        axs[0].plot(LC['bjd'], LC['dtr_flux'], 'k.')# raw plot
-        axs[0].set_title(len(LC))
+        fig, axs = plt.subplots(1, 1)
+        axs.plot(LC['bjd'], LC['dtr_flux'], 'k.')# raw plot
+        axs.set_title(len(LC))
 
-        LC.index = pd.to_datetime(LC['bjd'], origin='julian', unit='D')
-        timeSeries = TimeSeries.from_pandas(LC)
-
-        if len(LC) < 10000:
-            ts_binned = aggregate_downsample(timeSeries, time_bin_size=40 * u.min, aggregate_func=np.nanmedian)
-        else:
-            ts_binned = aggregate_downsample(timeSeries, n_bins=10000, aggregate_func=np.nanmedian)
-
-        ts_binned = ts_binned.to_pandas().dropna()
-        axs[1].plot(ts_binned['bjd'], ts_binned['dtr_flux'], 'k.')# binned plot
-        axs[1].set_title(len(ts_binned))
+        # LC.index = pd.to_datetime(LC['bjd'], origin='julian', unit='D')
+        # timeSeries = TimeSeries.from_pandas(LC)
+        #
+        # if len(LC) < 10000:
+        #     ts_binned = aggregate_downsample(timeSeries, time_bin_size=40 * u.min, aggregate_func=np.nanmedian)
+        # else:
+        #     ts_binned = aggregate_downsample(timeSeries, n_bins=10000, aggregate_func=np.nanmedian)
+        #
+        # ts_binned = ts_binned.to_pandas().dropna()
+        # axs[1].plot(ts_binned['bjd'], ts_binned['dtr_flux'], 'k.')# binned plot
+        # axs[1].set_title(len(ts_binned))
 
         plt.savefig(folder+'/' + os.path.basename(LCdata)[:-4] + '.png')
         plt.close(fig)
 
-        df = pd.DataFrame({"bjd": ts_binned['bjd'], "dtr_flux": ts_binned['dtr_flux'], "dtr_err": ts_binned['dtr_err']})
-        df = df.dropna()
+        df = pd.DataFrame({"bjd": LC['bjd'], "dtr_flux": LC['dtr_flux'], "dtr_err": LC['dtr_err']})
+        # df = df.dropna()
         df.to_csv(folder+'/' + os.path.basename(LCdata)[:-4] + '.txt', sep=' ', index=False, header=False)
     except Exception as e:
         print(f"Error: {e}")

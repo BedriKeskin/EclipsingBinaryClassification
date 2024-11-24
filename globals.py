@@ -11,9 +11,10 @@ from keras.applications.vgg16 import preprocess_input
 from keras.preprocessing.image import img_to_array, load_img
 import os
 from astropy.io.votable import parse
+from more_itertools.more import sample
+from keras.src.utils import to_categorical
 
 PNG_size = (224, 224)
-
 
 class Roche(Enum):
     Detached = 0
@@ -21,6 +22,37 @@ class Roche(Enum):
     OverContact = 2
     Ellipsoidal = 3
 
+class LCMorph(Enum):
+    EA = 0
+    EB = 1
+    EW = 2
+
+def ProcessImage(file):
+    image = load_img(file, target_size=PNG_size)
+    image = img_to_array(image)
+    image = image[:, :, ::-1]
+    image = image.reshape((image.shape[0], image.shape[1], image.shape[2]))
+    image = image.astype('float32')
+    image = preprocess_input(image)
+    return image
+
+def PrepareXy(base_dir):
+    dirs = [LCMorph.EA.name, LCMorph.EB.name, LCMorph.EW.name]
+    images, labels = [], []
+    for directory in dirs:
+        for index, file in enumerate(sample(glob.glob(base_dir + directory + "/*.png"), 1000000)):
+            image = ProcessImage(file)
+            images.append(image)
+            if directory == LCMorph.EA.name:
+                labels.append(LCMorph.EA.value)
+            elif directory == LCMorph.EB.name:
+                labels.append(LCMorph.EB.value)
+            elif directory == LCMorph.EW.name:
+                labels.append(LCMorph.EW.value)
+    X = np.array(images)
+    labels = np.array(labels)
+    y = to_categorical(labels, len(dirs))
+    return X, y
 
 def GetLabels(Enumeration):
     labels = []
@@ -28,7 +60,6 @@ def GetLabels(Enumeration):
         labels.append(item.name)
 
     return labels
-
 
 def GetLabel(morph):
     if morph <= 0.5:
