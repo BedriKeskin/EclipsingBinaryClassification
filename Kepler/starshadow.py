@@ -4,8 +4,6 @@ from datetime import datetime
 import random
 import os
 
-# sts.analyse_lc_from_file("/Users/bedrikeskin/EclipsingBinaryClassification/StarShadow2/KIC01161345_morp_0.24_T0_55005.028983_P_4.2874555.txt", p_orb=0, i_sectors=None, stage='all', method='fitter', data_id='none',
-#                          save_dir=None, overwrite=True, verbose=True)
 
 folder = "StarShadow"
 folderAnalysis = folder + "Analysis"
@@ -19,7 +17,7 @@ for index, LCdata in enumerate(LCdatas):
     print("\n", index, LCdata, now1)
 
     try:
-        P = 35.08981 # float(os.path.basename(LCdata).split("_")[6][:-4])
+        P = float(os.path.basename(LCdata).split("_")[6][:-4])
         sts.analyse_lc_from_file(LCdata, p_orb=P, i_sectors=None, stage='all', method='fitter', data_id='none',
                                  save_dir=folderAnalysis, overwrite=True, verbose=True)
         now2 = datetime.now()

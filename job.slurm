@@ -18,9 +18,7 @@
 
 ### Load modules
 module load miniconda3
-conda activate custom-env
-
-echo "We have the modules: $(module list 2>&1)" > ${SLURM_JOB_ID}.info
+conda activate virtualenv
 
 ### jobs
 python starshadow.py
