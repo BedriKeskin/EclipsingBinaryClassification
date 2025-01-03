@@ -10,12 +10,11 @@ from astropy.timeseries import TimeSeries
 from astropy.timeseries import aggregate_downsample
 from scipy.ndimage import uniform_filter1d
 from scipy.signal import savgol_filter
-import statsmodels.api as sm
 from scipy.signal import medfilt
 #from sklearn.ensemble import IsolationForest
 
 
-folder = "StarShadow2"
+folder = "StarShadow"
 if not os.path.exists(folder):
     os.makedirs(folder)
 

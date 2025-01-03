@@ -5,10 +5,10 @@ import cv2
 import numpy as np
 import pandas as pd
 from PIL import Image
-from keras.applications.vgg16 import preprocess_input
+from tensorflow.keras.applications.vgg16 import preprocess_input
 # from keras.utils import img_to_array
 # from keras.utils import load_img
-from keras.preprocessing.image import img_to_array, load_img
+from tensorflow.keras.preprocessing.image import img_to_array, load_img
 import os
 from astropy.io.votable import parse
 from more_itertools.more import sample

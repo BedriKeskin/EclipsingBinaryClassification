@@ -26,7 +26,7 @@ KeplerTessGaia.insert(7, "Prediction", "")
 KeplerTessGaia.insert(8, "DR3ClassPrediction", "")
 KeplerTessGaia.insert(9, "maxValue", np.NaN)
 
-# Sequential
+#Berk Sequential
 model = keras.saving.load_model('/Users/tiga/Library/CloudStorage/GoogleDrive-bedri.keskin@gmail.com/My Drive/Doktora/Vgg19_Berk_20240825-125419.keras')
 
 DR3PNG = glob.glob("../Gaia/PNGMowlaviFit/*.png")
@@ -53,8 +53,7 @@ for index, png in enumerate(DR3PNG):
         Type = globals.Roche.Ellipsoidal.name
 
     DR3ID = Path(png).stem
-    KeplerTessGaia.loc[KeplerTessGaia['DR3'] == DR3ID, 'Prediction'] = ', '.join(
-        [str(x) for x in prediction[0]])
+    KeplerTessGaia.loc[KeplerTessGaia['DR3'] == DR3ID, 'Prediction'] = ', '.join([str(x) for x in prediction[0]])
     KeplerTessGaia.loc[KeplerTessGaia['DR3'] == DR3ID, 'DR3ClassPrediction'] = Type
     KeplerTessGaia.loc[KeplerTessGaia['DR3'] == DR3ID, 'maxValue'] = maxValue
     filename = DR3ID + "_" + str(maxValue) + ".png"
