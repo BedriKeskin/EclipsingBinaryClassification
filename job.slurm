@@ -21,6 +21,6 @@ module load miniconda3
 conda activate virtualenv
 
 ### jobs
-python starshadow.py
+python runMultiple.py
 
 exit
