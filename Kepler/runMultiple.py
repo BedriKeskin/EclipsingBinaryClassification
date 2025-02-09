@@ -13,7 +13,7 @@ def run_starshadow_py():
 
     LCdatas = glob.glob("./" + folder + "/*.txt")
 
-    for index, LCdata in enumerate(LCdatas):
+    for index, LCdata in enumerate(LCdatas[1530:1540]):
         print("\n", index, LCdata, len(LCdata))
 
         try:
@@ -28,11 +28,12 @@ def run_starshadow_py():
         except Exception as e:
             print(f"{e} Error")
 
+    print(f"Process count: {len(processes)}")
+
     # Tüm süreçlerin tamamlanmasını bekle
     for i, process in enumerate(processes):
-        print(f"Process {process}")
         process.wait()
-        print(f"Process {i + 1}/20 finished")
+        print(f"Process {i + 1}/{len(processes)} finished")
 
 if __name__ == "__main__":
     run_starshadow_py()
