@@ -4,7 +4,7 @@
 #SBATCH --output=slurm-%j.out
 #SBATCH --error=slurm-%j.err
 #SBATCH --time=72:00:00
-#SBATCH --job-name=starshadow.py
+#SBATCH --job-name=SStess
 
 #SBATCH --partition=orfoz
 #SBATCH --ntasks=1

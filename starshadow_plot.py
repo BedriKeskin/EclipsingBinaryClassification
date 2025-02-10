@@ -1,16 +1,17 @@
 import star_shadow as sts
-import pandas as pd
 import glob
 import os
 
 
-LCdatas = glob.glob("/Users/bedrikeskin/EclipsingBinaryClassification/Tess/StarShadow/*.txt")
+folder = "./Tess/"
+LCdatas = glob.glob(folder+"StarShadow/*.txt")
 
 for index, LCdata in enumerate(LCdatas):
     print("\n", index, LCdata)
 
     try:
-        sts.ut.plot_all_from_file(LCdata, load_dir="/Users/bedrikeskin/EclipsingBinaryClassification/Tess/StarShadowAnalysis", save_dir="", show=False)
+        #if os.path.exists(folder + "StarShadowAnalysis/" + os.path.basename(LCdata)[:-4] + "_analysis/" + os.path.basename(LCdata)[:-4] + "_9.hdf5"):
+            sts.ut.plot_all_from_file(LCdata, load_dir=folder+"StarShadowAnalysis", save_dir=folder+"StarShadowAnalysis", show=False)
     
     except Exception as e:
         print(f"{e} Error")
