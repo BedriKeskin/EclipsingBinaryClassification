@@ -1,5 +1,7 @@
-2024-12-17 00:40:15 INFO main_functions - analyse_light_curve: Start of analysis
-2024-12-17 00:40:16 INFO main_functions - analyse_frequencies: Frequency extraction done. Total time elapsed: 0.6s.
-2024-12-17 00:40:16 INFO main_functions - analyse_harmonics: Harmonic analysis done. Total time elapsed: 0.3s.
-2024-12-17 00:40:17 INFO main_functions - find_eclipse_timings: Secondary is shallow (d_1: 0.10998832367390743, d_2: 0.04798681381413507, noise level: 0.048171157460695925)and its asymmetry is too large (0.011384011384011652) for its phase offset (0.23421273421273425)
-2024-12-17 00:40:17 INFO main_functions - analyse_light_curve: End of analysis. Total time elapsed: 1.5s.
+2025-01-28 00:16:17 INFO main_functions - analyse_light_curve: Start of analysis
+2025-01-28 00:17:07 INFO main_functions - analyse_frequencies: Frequency extraction done. Total time elapsed: 49.5s.
+2025-01-28 00:17:30 INFO main_functions - analyse_harmonics: Harmonic analysis done. Total time elapsed: 22.2s.
+2025-01-28 00:18:14 INFO main_functions - analyse_light_curve: Dividing period by 2, redoing some steps
+2025-01-28 00:18:23 INFO main_functions - analyse_harmonics: Harmonic analysis done. Total time elapsed: 9.1s.
+2025-01-28 00:18:35 INFO main_functions - find_eclipse_timings: Secondary is shallow (d_1: 0.109923270455179, d_2: 0.04798957617587038, noise level: 0.04817635594259335)and its asymmetry is too large (0.011310011310010741) for its phase offset (0.23422773422773424)
+2025-01-28 00:18:35 INFO main_functions - analyse_light_curve: End of analysis. Total time elapsed: 137.3s.

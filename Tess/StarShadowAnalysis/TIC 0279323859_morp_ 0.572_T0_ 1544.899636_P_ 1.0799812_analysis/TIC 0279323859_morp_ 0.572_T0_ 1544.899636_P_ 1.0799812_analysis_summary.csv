@@ -2,51 +2,51 @@
 # name, value
 id,TIC 0279323859_morp_ 0.572_T0_ 1544.899636_P_ 1.0799812,target identifier
 stage,  6,furthest stage the analysis reached
-t_tot,108.4970449982211,total time base of observations in days
-t_mean,2451599.645238341,time series mean time reference point
-period,0.5399903545188357,orbital period in days
-p_err,6.753394196396534e-06,error in the orbital period
+t_tot,-1,total time base of observations in days
+t_mean,-1,time series mean time reference point
+period,0.5399906000000494,orbital period in days
+p_err,3.250694275494943e-06,error in the orbital period
 p_err_l,-1.0,lower HDI error estimate in period
 p_err_u,-1.0,upper HDI error estimate in period
 n_param_prew,335.0,number of free parameters after the prewhitening phase
-bic_prew,-83041.49316916139,BIC after the prewhitening phase
-noise_level_prew,0.001773917007413143,noise level after the prewhitening phase
-t_1,-1.0,time of primary minimum with respect to the mean time
-t_2,-1.0,time of secondary minimum with respect to the mean time
-t_1_1,-1.0,time of primary first contact with respect to the mean time
-t_1_2,-1.0,time of primary last contact with respect to the mean time
-t_2_1,-1.0,time of secondary first contact with respect to the mean time
-t_2_2,-1.0,time of secondary last contact with respect to the mean time
-t_b_1_1,-1.0,start of (flat) eclipse bottom left of primary minimum
-t_b_1_2,-1.0,end of (flat) eclipse bottom right of primary minimum
-t_b_2_1,-1.0,start of (flat) eclipse bottom left of secondary minimum
-t_b_2_2,-1.0,end of (flat) eclipse bottom right of secondary minimum
-depth_1,-1.0,depth of primary minimum
-depth_2,-1.0,depth of secondary minimum
-t_1_err,-1.0,error in time of primary minimum (t_1)
-t_2_err,-1.0,error in time of secondary minimum (t_2)
-t_1_1_err,-1.0,error in time of primary first contact (t_1_1)
-t_1_2_err,-1.0,error in time of primary last contact (t_1_2)
-t_2_1_err,-1.0,error in time of secondary first contact (t_2_1)
-t_2_2_err,-1.0,error in time of secondary last contact (t_2_2)
-t_b_1_1_err,-1.0,error in start of (flat) eclipse bottom left of primary minimum
-t_b_1_2_err,-1.0,error in end of (flat) eclipse bottom right of primary minimum
-t_b_2_1_err,-1.0,error in start of (flat) eclipse bottom left of secondary minimum
-t_b_2_2_err,-1.0,error in end of (flat) eclipse bottom right of secondary minimum
-d_1_err,-1.0,error in depth of primary minimum
-d_2_err,-1.0,error in depth of secondary minimum
-t_1_ind_err,-1.0,individual error in time of primary minimum (t_1)
-t_2_ind_err,-1.0,individual error in time of secondary minimum (t_2)
-t_1_1_ind_err,-1.0,individual error in time of primary first contact (t_1_1)
-t_1_2_ind_err,-1.0,individual error in time of primary last contact (t_1_2)
-t_2_1_ind_err,-1.0,individual error in time of secondary first contact (t_2_1)
-t_2_2_ind_err,-1.0,individual error in time of secondary last contact (t_2_2)
-t_b_1_1_ind_err,-1.0,individual error in start of (flat) eclipse bottom left of primary minimum
-t_b_1_2_ind_err,-1.0,individual error in end of (flat) eclipse bottom right of primary minimum
-t_b_2_1_ind_err,-1.0,individual error in start of (flat) eclipse bottom left of secondary minimum
-t_b_2_2_ind_err,-1.0,individual error in end of (flat) eclipse bottom right of secondary minimum
-d_1_ind_err,-1.0,individual error in depth of primary minimum
-d_2_ind_err,-1.0,individual error in depth of secondary minimum
+bic_prew,-83022.76091801022,BIC after the prewhitening phase
+noise_level_prew,0.0017758155479745904,noise level after the prewhitening phase
+t_1,0.33339268979510517,time of primary minimum with respect to the mean time
+t_2,0.8733870697331101,time of secondary minimum with respect to the mean time
+t_1_1,0.2556836448212566,time of primary first contact with respect to the mean time
+t_1_2,0.4110952548752739,time of primary last contact with respect to the mean time
+t_2_1,0.7956866646175015,time of secondary first contact with respect to the mean time
+t_2_2,0.9510572353448795,time of secondary last contact with respect to the mean time
+t_b_1_1,0.33339268979510517,start of (flat) eclipse bottom left of primary minimum
+t_b_1_2,0.33339268979510517,end of (flat) eclipse bottom right of primary minimum
+t_b_2_1,0.8733870697331101,start of (flat) eclipse bottom left of secondary minimum
+t_b_2_2,0.8733870697331101,end of (flat) eclipse bottom right of secondary minimum
+depth_1,0.2409678268132881,depth of primary minimum
+depth_2,0.24086215072153097,depth of secondary minimum
+t_1_err,0.0002665454754990882,error in time of primary minimum (t_1)
+t_2_err,0.00026561529953227835,error in time of secondary minimum (t_2)
+t_1_1_err,0.00038014608565372504,error in time of primary first contact (t_1_1)
+t_1_2_err,0.0003737310738997909,error in time of primary last contact (t_1_2)
+t_2_1_err,0.000379319075986276,error in time of secondary first contact (t_2_1)
+t_2_2_err,0.0003719179855497789,error in time of secondary last contact (t_2_2)
+t_b_1_1_err,0.00038014608565372504,error in start of (flat) eclipse bottom left of primary minimum
+t_b_1_2_err,0.0003737310738997909,error in end of (flat) eclipse bottom right of primary minimum
+t_b_2_1_err,0.000379319075986276,error in start of (flat) eclipse bottom left of secondary minimum
+t_b_2_2_err,0.0003719179855497789,error in end of (flat) eclipse bottom right of secondary minimum
+d_1_err,0.00020525252059328615,error in depth of primary minimum
+d_2_err,0.00030328184572729784,error in depth of secondary minimum
+t_1_ind_err,0.001349332749441965,individual error in time of primary minimum (t_1)
+t_2_ind_err,0.0013446239210800869,individual error in time of secondary minimum (t_2)
+t_1_1_ind_err,0.001924412942985769,individual error in time of primary first contact (t_1_1)
+t_1_2_ind_err,0.001891938238879722,individual error in time of primary last contact (t_1_2)
+t_2_1_ind_err,0.0019202263732219992,individual error in time of secondary first contact (t_2_1)
+t_2_2_ind_err,0.001882759844522354,individual error in time of secondary last contact (t_2_2)
+t_b_1_1_ind_err,0.000251238204543532,individual error in start of (flat) eclipse bottom left of primary minimum
+t_b_1_2_ind_err,0.000251238204543532,individual error in end of (flat) eclipse bottom right of primary minimum
+t_b_2_1_ind_err,0.0002519736136355353,individual error in start of (flat) eclipse bottom left of secondary minimum
+t_b_2_2_ind_err,0.0002519736136355353,individual error in end of (flat) eclipse bottom right of secondary minimum
+d_1_ind_err,0.00206276230288408,individual error in depth of primary minimum
+d_2_ind_err,0.0030479448277033173,individual error in depth of secondary minimum
 ecosw_form,-1.0,e*cos(w) from timing formulae
 esinw_form,-1.0,e*sin(w) from timing formulae
 cosi_form,-1.0,cosine of inclination from timing formulae

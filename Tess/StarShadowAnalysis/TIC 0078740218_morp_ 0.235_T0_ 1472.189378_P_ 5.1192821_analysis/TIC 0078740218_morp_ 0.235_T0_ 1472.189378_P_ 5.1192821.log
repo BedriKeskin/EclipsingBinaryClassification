@@ -1,5 +1,7 @@
-2024-12-17 09:38:38 INFO main_functions - analyse_light_curve: Start of analysis
-2024-12-17 09:38:38 INFO main_functions - analyse_frequencies: Frequency extraction done. Total time elapsed: 0.7s.
-2024-12-17 09:38:39 INFO main_functions - analyse_harmonics: Harmonic analysis done. Total time elapsed: 0.4s.
-2024-12-17 09:38:39 INFO main_functions - find_eclipse_timings: No two eclipse signatures found above the noise level of 0.001122556744802238
-2024-12-17 09:38:39 INFO main_functions - analyse_light_curve: End of analysis. Total time elapsed: 1.5s.
+2025-01-28 00:16:15 INFO main_functions - analyse_light_curve: Start of analysis
+2025-01-28 00:17:16 INFO main_functions - analyse_frequencies: Frequency extraction done. Total time elapsed: 60.5s.
+2025-01-28 00:17:50 INFO main_functions - analyse_harmonics: Harmonic analysis done. Total time elapsed: 34.2s.
+2025-01-28 00:18:53 INFO main_functions - analyse_light_curve: Dividing period by 2, redoing some steps
+2025-01-28 00:18:59 INFO main_functions - analyse_harmonics: Harmonic analysis done. Total time elapsed: 6.5s.
+2025-01-28 00:19:09 INFO main_functions - find_eclipse_timings: Secondary is shallow (d_1: 0.001783207625326741, d_2: 0.0014809590628870458, noise level: 0.0011320626443945857) and duration difference is too large (0.057520057520057497) for its phase offset (0.262998762998763)
+2025-01-28 00:19:09 INFO main_functions - analyse_light_curve: End of analysis. Total time elapsed: 173.8s.
