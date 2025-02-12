@@ -1,0 +1,153 @@
+# KIC05621294_morp_0.6_T0_54954.510518_P_0.9389049, none
+# name, value
+id,KIC05621294_morp_0.6_T0_54954.510518_P_0.9389049,target identifier
+stage,  9,furthest stage the analysis reached
+t_tot,1470.4622835903428,total time base of observations in days
+t_mean,2455635.944198809,time series mean time reference point
+period,0.9389049000000159,orbital period in days
+p_err,1.310347399965743e-07,error in the orbital period
+p_err_l,-1.0,lower HDI error estimate in period
+p_err_u,-1.0,upper HDI error estimate in period
+n_param_prew,2287.0,number of free parameters after the prewhitening phase
+bic_prew,-662493.872608682,BIC after the prewhitening phase
+noise_level_prew,0.0006138632639088406,noise level after the prewhitening phase
+t_1,0.21357291117591481,time of primary minimum with respect to the mean time
+t_2,0.6849674879036995,time of secondary minimum with respect to the mean time
+t_1_1,0.11558869782769977,time of primary first contact with respect to the mean time
+t_1_2,0.3118688412626466,time of primary last contact with respect to the mean time
+t_2_1,0.5839750202476301,time of secondary first contact with respect to the mean time
+t_2_2,0.7835131669435802,time of secondary last contact with respect to the mean time
+t_b_1_1,0.21357291117591481,start of (flat) eclipse bottom left of primary minimum
+t_b_1_2,0.21357291117591481,end of (flat) eclipse bottom right of primary minimum
+t_b_2_1,0.6849674879036995,start of (flat) eclipse bottom left of secondary minimum
+t_b_2_2,0.6849674879036995,end of (flat) eclipse bottom right of secondary minimum
+depth_1,0.34009459495978667,depth of primary minimum
+depth_2,0.05389466447760474,depth of secondary minimum
+t_1_err,0.000178199268012002,error in time of primary minimum (t_1)
+t_2_err,0.00015622383588600436,error in time of secondary minimum (t_2)
+t_1_1_err,0.000255464503787596,error in time of primary first contact (t_1_1)
+t_1_2_err,0.00024851117436568246,error in time of primary last contact (t_1_2)
+t_2_1_err,0.00021922290329189013,error in time of secondary first contact (t_2_1)
+t_2_2_err,0.00022263168298340528,error in time of secondary last contact (t_2_2)
+t_b_1_1_err,0.000255464503787596,error in start of (flat) eclipse bottom left of primary minimum
+t_b_1_2_err,0.00024851117436568246,error in end of (flat) eclipse bottom right of primary minimum
+t_b_2_1_err,0.00021922290329189013,error in start of (flat) eclipse bottom left of secondary minimum
+t_b_2_2_err,0.00022263168298340528,error in end of (flat) eclipse bottom right of secondary minimum
+d_1_err,1.9933951911363157e-05,error in depth of primary minimum
+d_2_err,1.3860864315676633e-05,error in depth of secondary minimum
+t_1_ind_err,0.0035287285228963847,individual error in time of primary minimum (t_1)
+t_2_ind_err,0.00309356773345499,individual error in time of secondary minimum (t_2)
+t_1_1_ind_err,0.005058746262875482,individual error in time of primary first contact (t_1_1)
+t_1_2_ind_err,0.004921055395040108,individual error in time of primary last contact (t_1_2)
+t_2_1_ind_err,0.004341084676431705,individual error in time of secondary first contact (t_2_1)
+t_2_2_ind_err,0.004408585841054386,individual error in time of secondary last contact (t_2_2)
+t_b_1_1_ind_err,7.509615724638743e-05,individual error in start of (flat) eclipse bottom left of primary minimum
+t_b_1_2_ind_err,7.509615724638743e-05,individual error in end of (flat) eclipse bottom right of primary minimum
+t_b_2_1_ind_err,0.00048184067129121764,individual error in start of (flat) eclipse bottom left of secondary minimum
+t_b_2_2_ind_err,0.00048184067129121764,individual error in end of (flat) eclipse bottom right of secondary minimum
+d_1_ind_err,0.0007890924797555179,individual error in depth of primary minimum
+d_2_ind_err,0.0005486871766845803,individual error in depth of secondary minimum
+ecosw_form,0.0032490734940975575,e*cos(w) from timing formulae
+esinw_form,0.008864903969692526,e*sin(w) from timing formulae
+cosi_form,0.25333980650270554,cosine of inclination from timing formulae
+phi_0_form,0.6622484115938364,phi_0 angle (Kopal 1959) from timing formulae
+log_rr_form,-0.14196255525545204,logarithm of the radius ratio r2/r1 from timing formulae
+log_sb_form,-0.7935514522522342,logarithm of the surface brightness ratio sb2/sb1 from timing formulae
+e_form,0.00944155712591507,eccentricity from timing formulae
+w_form,1.2194898843061655,argument of periastron (radians) from timing formulae
+i_form,1.3146651900897597,inclination (radians) from timing formulae
+r_sum_form,0.6464764571902716,sum of radii divided by the semi-major axis of the relative orbit from timing formulae
+r_rat_form,0.7211696555414466,radius ratio r2/r1 from timing formulae
+sb_rat_form,0.16086017904153332,surface brightness ratio sb2/sb1 from timing formulae
+ecosw_sig,0.004593937975493832,formal uncorrelated error in ecosw
+esinw_sig,0.03981402750101653,formal uncorrelated error in esinw
+cosi_sig,0.034992854604336196,error estimate for cosi used for formal errors
+phi_0_sig,0.0007929488400164598,formal uncorrelated error in phi_0
+log_rr_sig,0.008954097427339408,scaled error formal estimate for log_rr
+log_sb_sig,0.00041514283327442143,scaled formal error estimate for log_sb
+e_sig,0.037415756066983864,formal uncorrelated error in e
+w_sig,1.521350940691281,formal uncorrelated error in w
+i_sig,0.035,error estimate for i used for formal errors
+r_sum_sig,0.008266890801944631,formal uncorrelated error in r_sum
+r_rat_sig,0.045486807036821904,scaled error formal estimate for r_rat
+sb_rat_sig,8.41532710938906e-05,scaled error formal estimate for sb_rat
+ecosw_low,0.004593937975493832,lower error estimate in ecosw
+ecosw_upp,0.004593937975493832,upper error estimate in ecosw
+esinw_low,0.10384195322703567,lower error estimate in esinw
+esinw_upp,0.10384195322703567,upper error estimate in esinw
+cosi_low,0.034992854604336196,lower error estimate in cosi
+cosi_upp,0.034992854604336196,upper error estimate in cosi
+phi_0_low,0.025960488306758917,lower error estimate in phi_0
+phi_0_upp,0.025960488306758917,upper error estimate in phi_0
+log_rr_low,0.02333301653415898,lower error estimate in log_rr
+log_rr_upp,0.011749970109319136,upper error estimate in log_rr
+log_sb_low,0.0010817991061001786,lower error estimate in log_sb
+log_sb_upp,0.00041514283327442143,upper error estimate in log_sb
+e_low,0.0974997937882434,lower error estimate in e
+e_upp,0.09749977170042931,upper error estimate in e
+w_low,3.78503092674739,lower error estimate in w
+w_upp,3.784983411671218,upper error estimate in w
+i_low,0.035,lower error estimate in i
+i_upp,0.035,upper error estimate in i
+r_sum_low,0.008266890801944631,lower error estimate in r_sum
+r_sum_upp,0.008266890801944631,upper error estimate in r_sum
+r_rat_low,0.045486807036821904,lower error estimate in r_rat
+r_rat_upp,0.045486807036821904,upper error estimate in r_rat
+sb_rat_low,0.00040019353403342173,lower error estimate in sb_rat
+sb_rat_upp,0.00013304219185908406,upper error estimate in sb_rat
+ecosw_phys,0.0045330557477620895,e cos(w) of the physical model
+esinw_phys,0.05351440194654922,e sin(w) of the physical model
+cosi_phys,0.2284449616769035,cos(i) of the physical model
+phi_0_phys,0.7397721380010311,phi_0 of the physical model
+log_rr_phys,-0.17545842917595736,log of radius ratio of the physical model
+log_sb_phys,-0.7903118767969264,log of surface brightness ratio of the physical model
+e_phys,0.05370605003264669,eccentricity of the physical model
+w_phys,1.486290848024294,argument of periastron of the physical model
+i_phys,1.3403162194020204,inclination (radians) of the physical model
+r_sum_phys,0.6929118837502031,sum of fractional radii of the physical model
+r_rat_phys,0.6676388045323701,radius ratio of the physical model
+sb_rat_phys,0.16206458565318485,surface brightness ratio of the physical model
+ecosw_err_l,-1.0,lower HDI error estimate in ecosw
+ecosw_err_u,-1.0,upper HDI error estimate in ecosw
+esinw_err_l,-1.0,lower HDI error estimate in esinw
+esinw_err_u,-1.0,upper HDI error estimate in esinw
+cosi_err_l,-1.0,lower HDI error estimate in cosi
+cosi_err_u,-1.0,upper HDI error estimate in cosi
+phi_0_err_l,-1.0,lower HDI error estimate in phi_0
+phi_0_err_u,-1.0,upper HDI error estimate in phi_0
+log_rr_err_l,-1.0,lower HDI error estimate in log_rr
+log_rr_err_u,-1.0,upper HDI error estimate in log_rr
+log_sb_err_l,-1.0,lower HDI error estimate in log_sb
+log_sb_err_u,-1.0,upper HDI error estimate in log_sb
+e_err_l,-1.0,lower HDI error estimate in e
+e_err_u,-1.0,upper HDI error estimate in e
+w_err_l,-1.0,lower HDI error estimate in w
+w_err_u,-1.0,upper HDI error estimate in w
+i_err_l,-1.0,lower HDI error estimate in i
+i_err_u,-1.0,upper HDI error estimate in i
+r_sum_err_l,-1.0,lower HDI error estimate in r_sum
+r_sum_err_u,-1.0,upper HDI error estimate in r_sum
+r_rat_err_l,-1.0,lower HDI error estimate in r_rat
+r_rat_err_u,-1.0,upper HDI error estimate in r_rat
+sb_rat_err_l,-1.0,lower HDI error estimate in sb_rat
+sb_rat_err_u,-1.0,upper HDI error estimate in sb_rat
+n_param_phys,2335.0,number of parameters after physical model optimisation
+bic_phys,-659291.6386201578,BIC after physical model optimisation
+noise_level_phys,0.0006283108450268317,noise level after physical model optimisation
+total_freqs,775,total number of frequencies
+passed_sigma,775,number of frequencies that passed the sigma test
+passed_snr,615,number of frequencies that passed the S/R test
+passed_both,615,number of frequencies that passed both tests
+passed_harmonics,10,number of harmonics that passed both tests
+std_1,0.0006283108450268317,Standard deviation of the residuals of the linear+sinusoid+eclipse model
+std_2,0.008967128158637342,Standard deviation of the residuals of the linear+eclipse model
+std_3,0.008356664218316922,Standard deviation of the residuals of the linear+harmonic 1 and 2+eclipse model
+std_4,0.008575456337882361,Standard deviation of the residuals of the linear+non-harmonic sinusoid+eclipse model
+ratio_1_1,541.2839801376707,Ratio of the first eclipse depth to std_1
+ratio_1_2,85.77707181753834,Ratio of the second eclipse depth to std_1
+ratio_2_1,37.92681323866212,Ratio of the first eclipse depth to std_2
+ratio_2_2,6.010248044207127,Ratio of the second eclipse depth to std_2
+ratio_3_1,40.697410602466874,Ratio of the first eclipse depth to std_3
+ratio_3_2,6.4493035821007805,Ratio of the second eclipse depth to std_3
+ratio_4_1,39.65906670848612,Ratio of the first eclipse depth to std_4
+ratio_4_2,6.28475760986891,Ratio of the second eclipse depth to std_4
