@@ -13,17 +13,17 @@ def run_starshadow_py():
 
     LCdatas = glob.glob("./" + folder + "/*.txt")
 
-    for index, LCdata in enumerate(LCdatas[1710:1720]):
+    for index, LCdata in enumerate(LCdatas[1920:1925]):
         print("\n", index, LCdata, len(LCdata))
 
         try:
-            fileName = os.path.basename(LCdata)[:-4] + "_analysis"
+            starFolder = os.path.basename(LCdata)[:-4] + "_analysis"
 
-            if not os.path.exists(folderAnalysis + "/" + fileName):
+            if not os.path.exists(folderAnalysis + "/" + starFolder + "/" + starFolder + "_summary.csv"):
                 process = subprocess.Popen(["python3", "starshadow.py",folderAnalysis, LCdata])
                 processes.append(process)
             else:
-                print("LC file already exists ", folderAnalysis + "/" + fileName)
+                print("LC file already exists ", folderAnalysis + "/" + starFolder)
 
         except Exception as e:
             print(f"{e} Error")
