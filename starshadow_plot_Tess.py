@@ -3,7 +3,7 @@ import glob
 import os
 
 
-folder = "./Kepler/"
+folder = "./Tess/"
 LCdatas = glob.glob(folder+"StarShadow/*.txt")
 
 for index, LCdata in enumerate(LCdatas):

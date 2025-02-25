@@ -45,47 +45,52 @@ for index, csv in enumerate(CSVs):
 
     for index1, row in vari_eclipsing_binary.iterrows():
         print("\n", index, index1, row['source_id'])
+        file = folder + '/' + row['source_id'] + '.png'
 
-        C = row['geom_model_reference_level']
-        dk1 = row['geom_model_gaussian1_depth']
-        muk1 = row['geom_model_gaussian1_phase']
-        sigmak1 = row['geom_model_gaussian1_sigma']
-        dk2 = row['geom_model_gaussian2_depth']
-        muk2 = row['geom_model_gaussian2_phase']
-        sigmak2 = row['geom_model_gaussian2_sigma']
-        Aell = row['geom_model_cosine_half_period_amplitude']
-        muell = row['geom_model_cosine_half_period_phase']
+        if not os.path.exists(file):
+            C = row['geom_model_reference_level']
+            dk1 = row['geom_model_gaussian1_depth']
+            muk1 = row['geom_model_gaussian1_phase']
+            sigmak1 = row['geom_model_gaussian1_sigma']
+            dk2 = row['geom_model_gaussian2_depth']
+            muk2 = row['geom_model_gaussian2_phase']
+            sigmak2 = row['geom_model_gaussian2_sigma']
+            Aell = row['geom_model_cosine_half_period_amplitude']
+            muell = row['geom_model_cosine_half_period_phase']
 
-        y = []
+            y = []
 
-        if row['model_type'] == 'TWOGAUSSIANS':
-            for i in range(Range):
-                fi = i / Range
-                y.append(C + Gaussian(fi, dk1, muk1, sigmak1) + Gaussian(fi, dk2, muk2, sigmak2))
+            if row['model_type'] == 'TWOGAUSSIANS':
+                for i in range(Range):
+                    fi = i / Range
+                    y.append(C + Gaussian(fi, dk1, muk1, sigmak1) + Gaussian(fi, dk2, muk2, sigmak2))
 
-        elif row['model_type'] == 'TWOGAUSSIANS_WITH_ELLIPSOIDAL_ON_ECLIPSE1' or row['model_type'] == 'TWOGAUSSIANS_WITH_ELLIPSOIDAL_ON_ECLIPSE2':
-            for i in range(Range):
-                fi = i / Range
-                y.append(C + Gaussian(fi, dk1, muk1, sigmak1) + Gaussian(fi, dk2, muk2, sigmak2) + Ellipsoidal(fi, Aell, muell))
+            elif row['model_type'] == 'TWOGAUSSIANS_WITH_ELLIPSOIDAL_ON_ECLIPSE1' or row['model_type'] == 'TWOGAUSSIANS_WITH_ELLIPSOIDAL_ON_ECLIPSE2':
+                for i in range(Range):
+                    fi = i / Range
+                    y.append(C + Gaussian(fi, dk1, muk1, sigmak1) + Gaussian(fi, dk2, muk2, sigmak2) + Ellipsoidal(fi, Aell, muell))
 
-        elif row['model_type'] == 'ONEGAUSSIAN':
-            for i in range(Range):
-                fi = i / Range
-                y.append(C + Gaussian(fi, dk1, muk1, sigmak1))
+            elif row['model_type'] == 'ONEGAUSSIAN':
+                for i in range(Range):
+                    fi = i / Range
+                    y.append(C + Gaussian(fi, dk1, muk1, sigmak1))
 
-        elif row['model_type'] == 'ONEGAUSSIAN_WITH_ELLIPSOIDAL':
-            for i in range(Range):
-                fi = i / Range
-                y.append(C + Gaussian(fi, dk1, muk1, sigmak1) + Ellipsoidal(fi, Aell, muell))
+            elif row['model_type'] == 'ONEGAUSSIAN_WITH_ELLIPSOIDAL':
+                for i in range(Range):
+                    fi = i / Range
+                    y.append(C + Gaussian(fi, dk1, muk1, sigmak1) + Ellipsoidal(fi, Aell, muell))
 
-        elif row['model_type'] == 'ELLIPSOIDAL':
-            for i in range(Range):
-                fi = i / Range
-                y.append(C + Ellipsoidal(fi, Aell, muell))
+            elif row['model_type'] == 'ELLIPSOIDAL':
+                for i in range(Range):
+                    fi = i / Range
+                    y.append(C + Ellipsoidal(fi, Aell, muell))
 
-        fig, ax = plt.subplots(1, 1)
-        plt.axis('off')
-        y = [i * -1 for i in y]
-        ax.plot(x, y, 'k-')
-        plt.savefig(folder + '/' + row['source_id'] + '.png')
-        plt.close()
+            fig, ax = plt.subplots(1, 1)
+            plt.axis('off')
+            y = [i * -1 for i in y]
+            ax.plot(x, y, 'k-')
+            plt.savefig(folder + '/' + row['source_id'] + '.png')
+            plt.close()
+            print("newly plotted ", file)
+        else:
+            print("already plotted ", file)
