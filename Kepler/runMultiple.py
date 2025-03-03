@@ -13,7 +13,7 @@ def run_starshadow_py():
 
     LCdatas = glob.glob("./" + folder + "/*.txt")
 
-    for index, LCdata in enumerate(LCdatas[2340:2350]):
+    for index, LCdata in enumerate(LCdatas[2610:2620]):
         print("\n", index, LCdata, len(LCdata))
 
         try:
