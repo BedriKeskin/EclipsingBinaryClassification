@@ -1,0 +1,1 @@
+We couldn't upload hundreds of thousands of light curves here, for all classified Gaia DR3 eclipsing binary stars please see https://doi.org/10.5281/zenodo.18360418
